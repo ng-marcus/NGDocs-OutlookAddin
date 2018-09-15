@@ -18,25 +18,12 @@ const render = (Component, Attachments) => {
   console.log(Attachments);
   ReactDOM.render(
     <AppContainer>
-      <Component title={title} isOfficeInitialized={isOfficeInitialized} />
+      <Component title={title} isOfficeInitialized={isOfficeInitialized} attachments={Attachments} />
     </AppContainer>,
     document.getElementById('container')
   );
 };
 
-const attachmentTokenCallback = (asyncResult) => {
-  if (asyncResult.status === 'succeeded') {
-    // Cache the result from the server.
-    //serviceRequest.attachmentToken = asyncResult.value;
-    // serviceRequest.state = 3;
-    // testAttachments();
-    console.log('token received');
-    console.log(asyncResult.value);
-  } else {
-    // showToast("Error", "Could not get callback token: " + asyncResult.error.message);
-    console.log(asyncResult.error.message);
-  }
-};
 
 
 
@@ -50,25 +37,23 @@ Office.initialize = () => {
 
   console.log(Office.context.mailbox.ewsUrl);
 
-  Office.context.mailbox.getCallbackTokenAsync(attachmentTokenCallback);
-
 
   let _Item = _mailbox.item;
   console.log(_Item);
-  // var MyEntities = _Item.getEntities();
-  // console.log(MyEntities);
+
 
   let attachments = (_Item as Office.MessageRead).attachments;
-  if (attachments.length > 0) {
-    console.log(attachments);
-    let att = attachments[0];
-    console.log(att.name);
-    console.log(att.id);
-  } else {
-    console.log('no attachments');
-  }
+  let realAttachments = attachments.filter(a => !a.isInline);
+  // if (attachments.length > 0) {
+  //   console.log(attachments);
+  //   let att = attachments[0];
+  //   console.log(att.name);
+  //   console.log(att.id);
+  // } else {
+  //   console.log('no attachments');
+  // }
 
-  render(App, attachments);
+  render(App, realAttachments);
 };
 
 /* Initial render showing a progress bar */
