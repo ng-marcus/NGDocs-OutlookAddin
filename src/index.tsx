@@ -7,8 +7,9 @@ import {
   getRandomString,
 } from '@pnp/common';
 
-import { sp } from '@pnp/sp';
+//import { sp } from '@pnp/sp';
 // import { SPFetchClient } from '@pnp/nodejs';
+//import * as MicrosoftGraph from '@microsoft/microsoft-graph-client';
 
 
 import App from './components/App';
@@ -75,14 +76,59 @@ Office.initialize = () => {
     console.log(entities.addresses);
   }
 
-  const mySP = sp.configure({
-    headers: {
-      'X-Header': 'My header'
-    }
-  }, 'https://atverodev.sharepoint.com');
 
-  mySP.web.lists.get().then(l => console.log(l))
-    .catch(e => console.log(e));
+
+  // Office.context.mailbox.getCallbackTokenAsync(result => {
+  //   if (result.status === Office.AsyncResultStatus.Succeeded) {
+  //     // Use this token to call Web API
+  //     console.log('SSO succeeded');
+  //     let ssoToken = result.value;
+  //     console.log(ssoToken);
+  //     fetch('https://graph.microsoft.com/beta/sites/atverodev/sites',
+  //       {
+  //         method: 'GET',
+  //         headers: {
+  //           'Authorization': 'Bearer ' + ssoToken,
+  //           'Accept': 'application/json',
+  //           'Content-Type': 'application/json'
+  //         }
+  //       })
+  //       .then(response => console.log(response));
+  //     // let client = MicrosoftGraph.Client.init({
+  //     //   authProvider: (done) => {
+  //     //     done(null, ssoToken); //first parameter takes an error if you can't get an access token
+  //     //   }
+  //     // });
+  //     // client
+  //     //   .api('/me')
+  //     //   .get((err, res) => {
+  //     //     console.log(res); // prints info about authenticated user
+  //     //     console.log(err);
+  //     //   });
+  //   } else {
+  //     if (result.error.code === 13003) {
+  //       console.log('SSO not supported');
+  //       // SSO is not supported for domain user accounts, only
+  //       // work or school (Office 365) or Microsoft Account IDs.
+  //     } else {
+  //       // Handle error
+  //       console.log('generic error');
+  //     }
+  //   }
+  // });
+
+  // const mySP = sp.configure({
+  //   headers: {
+  //     'X-Header': 'My header'
+  //   }
+  // }, 'https://atverodev.sharepoint.com');
+
+  // mySP.web.lists.get().then(l => console.log(l))
+  //   .catch(e => console.log(e));
+
+
+
+
 
   render(App, realAttachments);
 };

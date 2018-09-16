@@ -12,6 +12,7 @@
     "validate": "./node_modules/.bin/validate-office-addin"
   },
   "dependencies": {
+    "@microsoft/microsoft-graph-client": "^1.2.0",
     "@microsoft/office-js-helpers": "^1.0.1",
     "@pnp/common": "^1.2.1",
     "@pnp/logging": "^1.2.1",

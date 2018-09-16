@@ -1,0 +1,22 @@
+Notes
+
+SSO Outlook Add-in
+
+https://docs.microsoft.com/en-gb/outlook/add-ins/authenticate-a-user-with-an-sso-token
+
+
+SSO in client side apps to enable graph API calls
+https://docs.microsoft.com/en-gb/office/dev/add-ins/develop/sso-in-office-add-ins#add-client-side-code
+
+
+Setting up a Graph API SSO App 
+
+https://docs.microsoft.com/en-gb/office/dev/add-ins/develop/register-sso-add-in-aad-v2
+
+https://github.com/microsoftgraph/msgraph-sdk-javascript
+
+appid
+
+678acfd6-975b-40a6-b5ea-85c6f0440b89
+
+https://ngdocs-spsupport.azurewebsites.net/api/GetProjectList?code=Oxv466R06RaWWswbayxdlru5KdMRS2Jm1/fg9XBeFyjoYabF8tGi0A==

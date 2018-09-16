@@ -14,25 +14,18 @@ export interface AppProps {
 export interface AppState {
     selectedAttachments: string[];
     attachments: Office.AttachmentDetails[];
+    projects: string[];
 }
 
-// const attachmentTokenCallback = (asyncResult) => {
-//     if (asyncResult.status === 'succeeded') {
 
-//         console.log('token received');
-//         console.log(asyncResult.value);
-//     } else {
-//         // showToast("Error", "Could not get callback token: " + asyncResult.error.message);
-//         console.log(asyncResult.error.message);
-//     }
-// };
 
 export default class App extends React.Component<AppProps, AppState> {
     constructor(props, context) {
         super(props, context);
         this.state = {
             selectedAttachments: [],
-            attachments: props.attachments
+            attachments: props.attachments,
+            projects: []
         };
     }
 
@@ -53,12 +46,28 @@ export default class App extends React.Component<AppProps, AppState> {
     componentDidMount() {
         console.log('Component did mount');
 
-        // this.setState({
 
-        // });
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.attachmentTokenCallback = this.attachmentTokenCallback.bind(this);
+
+        console.log('fetch projects');
+        fetch('https://ngdocs-spsupport.azurewebsites.net/api/GetProjectList?code=Oxv466R06RaWWswbayxdlru5KdMRS2Jm1/fg9XBeFyjoYabF8tGi0A==',
+            {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(projects => {
+                console.log(projects);
+
+                this.setState({ ...this.state, projects: projects.projects });
+            });
+
+
 
 
 
@@ -93,7 +102,6 @@ export default class App extends React.Component<AppProps, AppState> {
                     .then(_response => console.log('sent')));
 
         } else {
-            // showToast("Error", "Could not get callback token: " + asyncResult.error.message);
             console.log(asyncResult.error.message);
         }
     }
@@ -103,8 +111,7 @@ export default class App extends React.Component<AppProps, AppState> {
         console.log(this.state.selectedAttachments);
 
         const target = event.target;
-        // const value = target.type === 'checkbox' ? target.checked : target.value;
-        //const name = target.name;
+
 
         if (target.checked) {
             console.log('add');
@@ -123,13 +130,10 @@ export default class App extends React.Component<AppProps, AppState> {
         console.log(this.state.selectedAttachments);
 
 
-        // this.setState({
-        //   [name]: value
-        // });
+
     }
 
     handleSubmit(event) {
-        // alert('Attachments were submitted: ' + this.state.selectedAttachments);
         console.log('File attachments');
         event.preventDefault();
         Office.context.mailbox.getCallbackTokenAsync(this.attachmentTokenCallback);
@@ -167,6 +171,11 @@ export default class App extends React.Component<AppProps, AppState> {
                     onChange={this.handleInputChange} />
             </li>
         ));
+        const listProjects = this.state.projects.map((item, index) => (
+            <option key={'p' + index} value={item}>
+                {item}
+            </option>
+        ));
         return (
             <div className='ms-welcome'>
                 <Header logo='assets/logo-filled.png' title={this.props.title} message='File Attachments' />
@@ -174,6 +183,13 @@ export default class App extends React.Component<AppProps, AppState> {
                     <ul className='ms-List ms-welcome__features ms-u-slideUpIn10'>
                         {listAttachments}
                     </ul>
+                    <br />
+                    Select project:&nbsp;
+                    <select >
+                        {listProjects}
+                    </select>
+                    <br />
+                    <br />
                     <input type='submit' value='File attachments' />
                 </form>
             </div >
