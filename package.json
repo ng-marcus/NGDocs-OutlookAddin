@@ -13,6 +13,10 @@
   },
   "dependencies": {
     "@microsoft/office-js-helpers": "^1.0.1",
+    "@pnp/common": "^1.2.1",
+    "@pnp/logging": "^1.2.1",
+    "@pnp/odata": "^1.2.1",
+    "@pnp/sp": "^1.2.1",
     "core-js": "^2.5.3",
     "office-ui-fabric-react": "^5.51.0",
     "react": "^16.2.0",

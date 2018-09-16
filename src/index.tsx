@@ -2,6 +2,14 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 import { initializeIcons } from 'office-ui-fabric-react/lib/Icons';
+// import { setup as pnpSetup } from '@pnp/common';
+import {
+  getRandomString,
+} from '@pnp/common';
+
+import { sp } from '@pnp/sp';
+// import { SPFetchClient } from '@pnp/nodejs';
+
 
 import App from './components/App';
 
@@ -9,6 +17,9 @@ import './styles.less';
 import 'office-ui-fabric-react/dist/css/fabric.min.css';
 
 initializeIcons();
+
+console.log(getRandomString(20));
+
 
 let isOfficeInitialized = false;
 
@@ -52,6 +63,26 @@ Office.initialize = () => {
   // } else {
   //   console.log('no attachments');
   // }
+
+  console.log('Entities:');
+  let entities = (_Item as Office.MessageRead).getEntities();
+  console.log(entities);
+  console.log(entities.contacts);
+  // Check to make sure that address entities are present.
+  if (null != entities && null != entities.addresses && undefined !== entities.addresses) {
+    //Addresses are present, so use them here.
+    console.log('addresses');
+    console.log(entities.addresses);
+  }
+
+  const mySP = sp.configure({
+    headers: {
+      'X-Header': 'My header'
+    }
+  }, 'https://atverodev.sharepoint.com');
+
+  mySP.web.lists.get().then(l => console.log(l))
+    .catch(e => console.log(e));
 
   render(App, realAttachments);
 };
